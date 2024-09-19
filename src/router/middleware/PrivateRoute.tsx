@@ -1,18 +1,17 @@
-import { ComponentType, useContext } from "react"
-import { PublicRoutes } from '../config/index';
-import { Navigate } from "react-router-dom";
+import { useContext } from "react"
+import { PublicRoutes, Roles } from '../config/index';
+import { Navigate, Outlet } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
-interface PrivateRouteProps {
-    element: ComponentType,
-    authorization: number[]
-}
-
-export const PrivateRoute = ({ element: Element, authorization }: PrivateRouteProps) => {
+export const PrivateRoute = () => {
     const { authContext } = useContext(UserContext)
 
     const isAuthorizated = !!authContext.token;
-    const isAllowed = authorization.includes(authContext.rol);
+    const isAllowed = Roles.inventorio.includes(authContext.rol);
 
-    return isAllowed && isAuthorizated ? <Element /> : <Navigate to={PublicRoutes.LOGIN} />
+    if (!isAllowed || !isAuthorizated) {
+        return <Navigate to={PublicRoutes.LOGIN} />
+    }
+
+    return <Outlet />;
 }

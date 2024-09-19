@@ -4,6 +4,8 @@ export const PublicRoutes = {
 
 export const PrivateRoutes = {
     INVENTORY: '/inventario',
+    ADDPRODUCT: 'add-product',
+    EDITPRODUCT: 'edit-product',
     SALES: '/ventas'
 }
 
